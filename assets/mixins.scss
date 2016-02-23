@@ -1,0 +1,304 @@
+// mixiny pro tento projekt
+
+
+// obecne mixiny
+
+// flexbox
+@mixin flex-box {
+    @include display-flex;
+    @include flex-wrap(wrap);
+}
+
+// font-size + line-height
+@mixin fs($font_size, $line_height, $df:0) {
+    @if 0 == $df {
+        $df: $default_size;
+    }
+
+    //font-size: $font_size/$default_size*100%;
+    //line-height: $line_height/$font_size*100%;
+    font-size: $font_size/$df*100%;
+    line-height: $line_height/$font_size*100%;
+}
+
+// menu
+@mixin nav {
+    nav {
+        ul {
+            @extend %clearfix;
+        }
+        li {
+            float: left;
+            list-style-type: none;
+
+            a {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+// mobilni menu
+@mixin mobile_nav($bg_color, $total_items, $max_height) {
+    nav {
+        background-color: $bg_color;
+        left: 0;
+        margin-left: 0;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+
+        transition: background 0.35s linear 0.7s, max-height 0.1s ease-in 0.7s;
+        -moz-transition: background 0.35s linear 0.7s, max-height 0.1s ease-in 0.7s;
+        -o-transition: background 0.35s linear 0.7s, max-height 0.1s ease-in 0.7s;
+        -webkit-transition: background 0.35s linear 0.7s, max-height 0.1s ease-in 0.7s;
+
+        li {
+            @include single-transition(opacity, 0.35s, ease-out, 0s);
+            float: none;
+            opacity: 0;
+            text-align: center;
+
+            @for $i from 1 through $total_items {
+                &:nth-child(#{$i}) {
+                    @include transition-delay (#{$i * 100}ms, #{$i * 100}ms);
+                }
+            }
+        }
+        a {
+            display: block;
+        }
+    }
+    @at-root .show-menu {
+        nav {
+            max-height: $max_height;
+            transition: background 0.35s linear 0s, max-height 0.2s ease-in 0s;
+            -moz-transition: background 0.35s linear 0s, max-height 0.2s ease-in 0s;
+            -o-transition: background 0.35s linear 0s, max-height 0.2s ease-in 0s;
+            -webkit-transition: background 0.35s linear 0s, max-height 0.2s ease-in 0s;
+
+            li {
+                opacity: 1;
+
+                @for $i from 1 through $total_items {
+                    &:nth-child(#{$i}) {
+                        @include transition-delay (#{($total_items - $i + 2) * 100}ms, #{($total_items - $i + 2) * 100}ms);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// hamburger
+@mixin nav_icon($nav_icon_color: #000, $nav_icon_width: 30px, $nav_icon_height: 30px, $nav_icon_line_height: 4px, $nav_icon_line_radius: 0px) {
+    #nav-icon {
+        @include transition;
+        cursor: pointer;
+        display: inline-block;
+        height: $nav_icon_height;
+        position: relative;
+        width: $nav_icon_width;
+
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+
+        span {
+            @include transition;
+            background-color: $nav_icon_color;
+
+            @if $nav_icon_line_radius > 0px {
+                border-radius: $nav_icon_line_radius;
+            }
+
+            display: block;
+            height: $nav_icon_line_height;
+            left: 0;
+            opacity: 1;
+            position: absolute;
+            width: 100%;
+
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+
+            &:nth-child(1) {
+                top: 2px;
+            }
+            &:nth-child(2),
+            &:nth-child(3) {
+                top: round(($nav_icon_height - $nav_icon_line_height) / 2);
+            }
+            &:nth-child(4) {
+                top: $nav_icon_height - $nav_icon_line_height - 2;
+            }
+        }
+        &:hover {
+            span {
+                &:nth-child(1) {
+                    top: 0;
+                }
+                &:nth-child(4) {
+                    top: $nav_icon_height - $nav_icon_line_height;
+                }
+            }
+        }
+    }
+    @at-root .show-menu {
+        #nav-icon {
+            span {
+                &:nth-child(1) {
+                    top: 18px;
+                    width: 0%;
+                    left: 50%;
+                }
+                &:nth-child(2) {
+                    -webkit-transform: rotate(45deg);
+                    -moz-transform: rotate(45deg);
+                    -o-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                }
+                &:nth-child(3) {
+                    -webkit-transform: rotate(-45deg);
+                    -moz-transform: rotate(-45deg);
+                    -o-transform: rotate(-45deg);
+                    transform: rotate(-45deg);
+                }
+                &:nth-child(4) {
+                    top: 18px;
+                    width: 0%;
+                    left: 50%;
+                }
+            }
+        }
+    }
+}
+
+// roztazeni provku pres celou sirku, napr. polozky menu s ruznou sirkou polozek
+// http://stackoverflow.com/questions/5060923/how-to-stretch-html-css-horizontal-navigation-items-evenly-and-fully-across-a/27158016#27158016
+@mixin stretch {
+    ul {
+        text-align: justify;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
+
+        &:after {
+            content: '';
+            display: inline-block;
+            width: 100%;
+        }
+        li {
+            display: inline-block;
+            float: none;
+            line-height: 100%;
+        }
+    }
+}
+
+// logo
+@mixin logo($width, $height) {
+    display: block;
+    height: #{$height}px;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: -1000px;
+    width: #{$width}px;
+}
+
+// clearfix
+%clearfix {
+	display: block;
+
+    &:after {
+    	clear: both;
+    	content: "";
+    	display: block;
+    	visibility: hidden;
+    	height: 0;
+    }
+}
+/*
+@mixin clearfix {
+	display: block;
+
+    &:after {
+    	clear: both;
+    	content: '';
+    	display: block;
+    	visibility: hidden;
+    	height: 0;
+    }
+}
+*/
+
+// non-visible
+@mixin non_visible {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+/*
+http://compass-style.org/index/mixins/
+*/
+
+// background-size
+@mixin bs($bs) {
+    @include background-size($bs);
+}
+
+// transitions
+// nastaveni vychozi animace
+$default-transition-function: ease-in-out;
+$default-transition-duration: 0.3s;
+
+@mixin transition($duration: 0.3s) {
+    @include single-transition(all, $duration);
+}
+@mixin transition_c($duration: 0.3s) {
+    @include single-transition(color, $duration);
+}
+@mixin transition_bc($duration: 0.3s) {
+    @include single-transition(background-color, $duration);
+}
+@mixin transition_boc($duration: 0.3s) {
+    @include single-transition(border-color, $duration);
+}
+@mixin reset_transition {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    -ms-transition: none;
+    transition: none;
+}
+
+// zamezeni oznaceni prvku
+@mixin no_select {
+    @include user-select(none);
+}
+
+// Border radius
+// nastaveni vychoziho polomeru
+$default-border-radius: 5px;
+/*
+mixiny:
+border-bottom-left-radius($radius)
+border-bottom-radius($radius)
+border-bottom-right-radius($radius)
+border-left-radius($radius)
+border-radius($radius, $vertical-radius)
+border-right-radius($radius)
+border-top-left-radius($radius)
+border-top-radius($radius)
+border-top-right-radius($radius)
+*/
+
+// stin
+@mixin shadow {
+    @include box-shadow(0px 1px 2px 0px rgba($black_color, 0.23));
+}

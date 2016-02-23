@@ -1,0 +1,64 @@
+/*
+   Swatches Styles
+*/
+
+$width: 50px;
+$height: 35px;
+
+.swatches {
+    @extend %clearfix;
+    margin: 17px 0 80px;
+}
+.selector-wrapper,
+#productSelect {
+    display: none;
+}
+.swatch {
+    @extend %clearfix;
+    float: left;
+    margin-right: 40px;
+
+    &:nth-last-child(2) {
+        margin-right: 0;
+    }
+
+    .header {
+        float: left;
+        margin: 14px 14px 0 0;
+    }
+    input {
+        display:none;
+    }
+    .swatch-element {
+        float: left;
+        margin-left: 4px;
+        position: relative;
+    }
+    label {
+        @include transition;
+        background-color: transparent;
+        color: $black_color;
+        cursor: pointer;
+        display: block;
+        height: 42px;
+        padding-top: 14px;
+        text-align: center;
+        width: 42px;
+    }
+    .disabled {
+        label {
+            color: $gray5_color;
+            cursor: default;
+        }
+    }
+}
+
+/* Styling unselected swatch */
+.swatch input:checked + label {
+    background-color: $black_color;
+    color: $white_color;
+}
+.swatch .swatch-element:not(.disabled) input:not(:checked) + label:hover {
+    background-color: $black_color;
+    color: $white_color;
+}

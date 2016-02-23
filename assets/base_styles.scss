@@ -1,0 +1,181 @@
+// vychozi velikost pisma
+$default_size: 15;
+
+// definice barev
+$white_color: #fff;
+$black_color: #000;
+
+$white2_color: #a6a6a6;
+$white3_color: #f1f1f1;
+
+$gray_color: #dcdcdc;
+$gray2_color: #d5d5d5;
+$gray3_color: #7e7e7e;
+$gray4_color: #d6d6d6;
+$gray5_color: #dddcd4;
+
+// definice breakpointu
+$breakpoint_1600: 1600px;
+$breakpoint_1200: 1200px;
+$breakpoint_1170: 1170px;
+$breakpoint_940:  940px;
+$breakpoint_850:  850px;
+$breakpoint_760:  760px;
+$breakpoint_600:  600px;
+$breakpoint_450:  450px;
+$breakpoint_320:  320px;
+
+// definice fontu
+@mixin font_ralewayregular {
+    font-family: "ralewayregular",sans-serif;
+}
+@mixin font_ralewaymedium {
+    font-family: "ralewaymedium",sans-serif;
+}
+@mixin font_ralewaybold {
+    font-family: "ralewaybold",sans-serif;
+}
+@mixin font_ralewayextrabold {
+    font-family: "ralewayextrabold",sans-serif;
+}
+@mixin font_didotitalic {
+    font-family: "didotitalic",Times New Roman,sans-serif;
+    font-style: italic;
+}
+@mixin font_didotbold {
+    font-family: "didotbold",Times New Roman,sans-serif;
+}
+
+@font-face {
+    font-family: 'ralewayregular';
+    src: url('raleway-regular-webfont.eot');
+    src: url('raleway-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('raleway-regular-webfont.woff') format('woff'),
+         url('raleway-regular-webfont.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'ralewaymedium';
+    src: url('raleway-medium-webfont.eot');
+    src: url('raleway-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('raleway-medium-webfont.woff') format('woff'),
+         url('raleway-medium-webfont.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'ralewaybold';
+    src: url('raleway-bold-webfont.eot');
+    src: url('raleway-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('raleway-bold-webfont.woff') format('woff'),
+         url('raleway-bold-webfont.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'ralewayextrabold';
+    src: url('raleway-extrabold-webfont.eot');
+    src: url('raleway-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('raleway-extrabold-webfont.woff') format('woff'),
+         url('raleway-extrabold-webfont.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'didotitalic';
+    src: url('ufonts.com_didot_italic.eot');
+    src: url('ufonts.com_didot_italic.eot?#iefix') format('embedded-opentype'),
+         url('ufonts.com_didot_italic.woff') format('woff'),
+         url('ufonts.com_didot_italic.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'didotbold';
+    src: url('ufonts.com_didot_bold.eot');
+    src: url('ufonts.com_didot_bold.eot?#iefix') format('embedded-opentype'),
+         url('ufonts.com_didot_bold.woff') format('woff'),
+         url('ufonts.com_didot_bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+// nastaveni adresare s obrazkami
+$image_dir: "";
+
+// Compass libraries
+@import "compass";
+
+// Compass reset
+@include global-reset;
+
+// Compass box sizing
+* {
+    @include box-sizing(border-box);
+    outline: 0 none;
+}
+body {
+    background-color: $white_color;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+}
+img.float-left {
+    float: left;
+    margin: 0 20px 10px 0;
+}
+img.float-right {
+    float: right;
+    margin: 0 0 10px 20px;
+}
+a {
+    @include unstyled-link;
+    @include transition;
+    cursor: pointer;
+}
+em {
+    font-style: italic;
+}
+u {
+    text-decoration: underline;
+}
+del {
+    text-decoration: line-through;
+}
+sup,
+sub {
+    font-size: smaller;
+    line-height: normal;
+}
+sup {
+    vertical-align: super;
+}
+sub {
+    vertical-align: sub;
+}
+button {
+    cursor: pointer;
+}
+input,
+textarea {
+    outline: 0 none;
+}
+textarea {
+    resize: none;
+}
+div.grid_info {
+    background-color: $black_color;
+    border: 1px solid rgba($white_color, 0.2);
+    bottom: -1px;
+    color: $white_color;
+    display: block;
+    padding: 15px;
+    position: fixed;
+    right: -1px;
+    top: auto !important;
+    z-index: 99999;
+}
